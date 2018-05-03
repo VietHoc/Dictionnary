@@ -29,16 +29,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCustomListener,TextToSpeech.OnInitListener{
 
     private MyAdapter myadapter;
-    private ListView listView,listView_navigation;
-    private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
-    private EditText ed_search;
-
     public TextToSpeech tts;
-    private int result;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
         tts = new TextToSpeech(this, this);
 
 
-        listView=(ListView) findViewById(R.id.listview);
+        ListView listView = (ListView) findViewById(R.id.listview);
 
 
         myadapter=new MyAdapter(WordController.INSTANCE.getWords(),this);
@@ -64,12 +55,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
         });
 
 
-
-        toolbar=(Toolbar) findViewById(R.id.toolbar);
-        drawerLayout=(DrawerLayout) findViewById(R.id.drawer_layout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         setSupportActionBar(toolbar);
 
-        ed_search=(EditText) findViewById(R.id.ed_search);
+        EditText ed_search = (EditText) findViewById(R.id.ed_search);
 
         ed_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,8 +79,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
         });
 
 
-
-        drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,0,0){
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -106,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
         drawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        String[] arr_navi={"English-Vietnamese","Favorite list","Exit"};
-        listView_navigation=(ListView) findViewById(R.id.listview_navi);
+        String[] arr_navi={"English-Vietnamese","Favorite list"};
+        ListView listView_navigation = (ListView) findViewById(R.id.listview_navi);
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arr_navi);
         listView_navigation.setAdapter(adapter);
         listView_navigation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,15 +107,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
                         break;
                     case 1:
                         break;
-                    case 2:
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        System.exit(1);
-                        break;
                 }
             }
         });
-
-
     }
 
     @Override
@@ -146,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
     public void onInit(int status) {
         if (status!=TextToSpeech.ERROR){
             Log.i("TAG",String.valueOf(status));
-            result=tts.setLanguage(Locale.US);
+            tts.setLanguage(Locale.US);
         }else {
             Toast.makeText(getApplicationContext(),"Feature not sopportedin your device",Toast.LENGTH_SHORT).show();
         }

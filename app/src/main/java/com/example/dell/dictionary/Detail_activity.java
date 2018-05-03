@@ -21,9 +21,6 @@ import java.util.Locale;
  */
 public class Detail_activity extends AppCompatActivity implements MyPagerAdapter.TTS,TextToSpeech.OnInitListener{
 
-    private MyPagerAdapter pagerAdapter;
-    private ViewPager pager;
-
     private Word word;
 
     private TextToSpeech tts;
@@ -44,8 +41,8 @@ public class Detail_activity extends AppCompatActivity implements MyPagerAdapter
 
 
     private void init() {
-        pagerAdapter = new MyPagerAdapter(WordController.INSTANCE.getWords(), this);
-        pager = (ViewPager) findViewById(R.id.viewPager);
+        MyPagerAdapter pagerAdapter = new MyPagerAdapter(WordController.INSTANCE.getWords(), this);
+        ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(WordController.INSTANCE.getWords().indexOf(word));
     }
