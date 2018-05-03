@@ -21,9 +21,6 @@ import android.widget.Toast;
 
 import com.example.dell.dictionary.controllers.WordController;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCustomListener,TextToSpeech.OnInitListener{
@@ -48,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 final Word word=(Word) adapterView.getItemAtPosition(position);
-                    Intent intent = new Intent(MainActivity.this, Detail_activity.class);
+                    Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                     intent.putExtra("word_id", word.getId());
                     startActivity(intent);
             }
