@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.dell.dictionary.R
+import com.example.dell.dictionary.activities.bases.IPlaySound
 
 import com.example.dell.dictionary.controllers.FavoriteController
 import com.example.dell.dictionary.models.Word
@@ -20,7 +21,7 @@ class MyPagerAdapter(
         var words: List<Word>,
         var context: Context) : PagerAdapter() {
 
-    var tts = context as TTS
+    var tts = context as IPlaySound
 
     override fun getPageWidth(position: Int): Float {
         return 1f
@@ -50,7 +51,7 @@ class MyPagerAdapter(
         imbstar.isActivated = FavoriteController.contains(word)
         tvDetail.text = word.detail!!.substring(word.word!!.length)
 
-        imbspeak.setOnClickListener { tts.speackOut(position, tvWord.text.toString()) }
+        imbspeak.setOnClickListener { tts.speak(position, tvWord.text.toString()) }
 
         imbstar.setOnClickListener {
             imbstar.isActivated = FavoriteController.toggleAdd(word)
@@ -62,9 +63,5 @@ class MyPagerAdapter(
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as RelativeLayout)
-    }
-
-    interface TTS {
-        fun speackOut(position: Int, str: String)
     }
 }

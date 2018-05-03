@@ -18,22 +18,23 @@ import android.widget.ListView
 import android.widget.Toast
 import com.example.dell.dictionary.adapters.MyAdapter
 import com.example.dell.dictionary.R
+import com.example.dell.dictionary.activities.bases.AbstractSoundPlayActivity
+import com.example.dell.dictionary.controllers.FavoriteController
 import com.example.dell.dictionary.models.Word
 
 import com.example.dell.dictionary.controllers.WordController
 
 import java.util.Locale
 
-class MainActivity : AppCompatActivity(), MyAdapter.ItemCustomListener, TextToSpeech.OnInitListener {
+class MainActivity : AbstractSoundPlayActivity() {
 
-    private var myadapter: MyAdapter? = null
+    private lateinit var myadapter: MyAdapter
     var tts: TextToSpeech? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        tts = TextToSpeech(this, this)
 
         val listView = findViewById<View>(R.id.listview) as ListView
 
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.ItemCustomListener, TextToSp
             }
 
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                myadapter!!.filter.filter(charSequence.toString())
+                myadapter.filter.filter(charSequence.toString())
             }
 
             override fun afterTextChanged(editable: Editable) {
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.ItemCustomListener, TextToSp
                 invalidateOptionsMenu()
             }
         }
+
         drawerLayout.setDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
@@ -88,41 +90,17 @@ class MainActivity : AppCompatActivity(), MyAdapter.ItemCustomListener, TextToSp
         val listView_navigation = findViewById<View>(R.id.listview_navi) as ListView
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, arr_navi)
         listView_navigation.adapter = adapter
-        listView_navigation.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
+
+        listView_navigation.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             when (position) {
-                0 -> {
-                }
-                1 -> {
-                }
+                0 -> showList(WordController.words)
+                1 -> showList(FavoriteController.favorites)
             }
         }
     }
 
-    override fun onInit(status: Int) {
-        if (status != TextToSpeech.ERROR) {
-            Log.i("TAG", status.toString())
-            tts!!.language = Locale.US
-        } else {
-            Toast.makeText(applicationContext, "Feature not sopportedin your device", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onDestroy() {
-        if (tts != null) {
-            tts!!.stop()
-            tts!!.shutdown()
-        }
-        super.onDestroy()
-    }
-
-    override fun onPause() {
-        if (tts != null) {
-            tts!!.stop()
-        }
-        super.onPause()
-    }
-
-    override fun onSpeak(position: Int, text: String) {
-        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null)
+    private fun showList(words: List<Word>){
+        myadapter.listdata = words
+        myadapter.notifyDataSetChanged()
     }
 }

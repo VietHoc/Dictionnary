@@ -11,6 +11,7 @@ import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.dell.dictionary.R
+import com.example.dell.dictionary.activities.bases.IPlaySound
 
 import com.example.dell.dictionary.controllers.FavoriteController
 import com.example.dell.dictionary.models.Word
@@ -20,12 +21,12 @@ import java.util.ArrayList
 /**
  * Created by DELL on 7/30/2016.
  */
-class MyAdapter(private var listdata: List<Word>,
-                private val context: Context) :
+class MyAdapter(var listdata: List<Word>,
+                val context: Context) :
         BaseAdapter(), Filterable {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-    private val itemCustomListener = context as ItemCustomListener
+    private val itemCustomListener = context as IPlaySound
 
     private var mOriginalValues: List<Word>? = null
 
@@ -66,7 +67,7 @@ class MyAdapter(private var listdata: List<Word>,
         holder.imbspeak!!.setOnClickListener {
             Log.i("TAG", holder.textView!!.text.toString())
 
-            itemCustomListener.onSpeak(position, holder.textView!!.text.toString())
+            itemCustomListener.speak(position, holder.textView!!.text.toString())
         }
 
         holder.imbstar!!.setOnClickListener {
@@ -121,9 +122,5 @@ class MyAdapter(private var listdata: List<Word>,
                 notifyDataSetChanged()
             }
         }
-    }
-
-    interface ItemCustomListener {
-        fun onSpeak(position: Int, text: String)
     }
 }
