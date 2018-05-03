@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -78,8 +79,10 @@ public class MyDatabase extends SQLiteOpenHelper{
             // transfer byte to inputfile to outputfile
             byte[] buffer = new byte[1024];
             int length;
+            long total = 0;
             while ((length = myinput.read(buffer))>0) {
                 myoutput.write(buffer,0,length);
+                total += length;
             }
 
             //Close the streams
@@ -108,13 +111,12 @@ public class MyDatabase extends SQLiteOpenHelper{
         Cursor cursor = myDataBase.rawQuery("SELECT id,code,content FROM tblDictionary",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
+
             Words.add(new Word(cursor.getString(1),cursor.getString(2),cursor.getInt(0)));
             cursor.moveToNext();
         }
         return Words;
     }
-
-
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

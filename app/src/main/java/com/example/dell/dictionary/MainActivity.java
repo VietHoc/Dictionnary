@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
         words=new ArrayList<>();
         favoriteWords=new ArrayList<>();
         myDatabase.opendatabase();
+
         words=myDatabase.getList();
 
         databaseLove.open();

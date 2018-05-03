@@ -11,6 +11,8 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.dell.dictionary.controllers.FavoriteController;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,24 +60,22 @@ public class MyAdapter extends BaseAdapter implements Filterable {
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
         final ViewHolder holder;
-        Word word=listdata.get(position);
+        final Word word=listdata.get(position);
+
         if (view == null) {
-            view = layoutInflater.inflate(R.layout.row_item, null);
+            view = layoutInflater.inflate(R.layout.row_item, viewGroup, false);
             holder = new ViewHolder();
+            holder.word = word;
             holder.textView = (TextView) view.findViewById(R.id.textview);
             holder.imbspeak=(ImageButton) view.findViewById(R.id.imbspeaker);
             holder.imbstar=(ImageButton) view.findViewById(R.id.imbstar);
-//            if (checkWord(listFavorite,word)){
-//                holder.imbstar.setImageResource(R.drawable.staron);
-//            }
+
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
 
 
-
-        word = this.listdata.get(position);
         holder.textView.setText(word.getWord());
         holder.imbspeak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,13 +87,15 @@ public class MyAdapter extends BaseAdapter implements Filterable {
             }
         });
 
-//        holder.imbstar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (itemFavorite!=null)
-//                    itemFavorite.onFavorite(position);
-//            }
-//        });
+        holder.imbstar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FavoriteController.INSTANCE.toggleAdd(word);
+                notifyDataSetChanged();
+            }
+        });
+
+        holder.imbstar.setActivated(FavoriteController.INSTANCE.contains(word));
         return view;
     }
 
@@ -102,6 +104,7 @@ public class MyAdapter extends BaseAdapter implements Filterable {
         TextView textView;
         ImageButton imbspeak;
         ImageButton imbstar;
+        Word word;
     }
 
 
@@ -152,15 +155,4 @@ public class MyAdapter extends BaseAdapter implements Filterable {
     public interface ItemFavorite{
         void onFavorite(int position);
     }
-//    public boolean checkWord(List<Word> list,Word word){
-//        boolean bl=false;
-//        for (Word w :
-//                list) {
-//            if (w.getId() == word.getId()){
-//                bl=true;
-//                break;
-//            }
-//        }
-//        return bl;
-//    }
 }
