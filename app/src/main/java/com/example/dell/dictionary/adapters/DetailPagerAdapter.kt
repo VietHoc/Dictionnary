@@ -17,7 +17,7 @@ import com.example.dell.dictionary.models.Word
 /**
  * Created by DELL on 8/4/2016.
  */
-class MyPagerAdapter(
+class DetailPagerAdapter(
         var words: List<Word>,
         var context: Context) : PagerAdapter() {
 

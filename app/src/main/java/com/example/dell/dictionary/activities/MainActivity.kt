@@ -1,24 +1,18 @@
 package com.example.dell.dictionary.activities
 
-import android.content.Intent
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
-import android.widget.Toast
-import com.example.dell.dictionary.adapters.MyAdapter
 import com.example.dell.dictionary.R
 import com.example.dell.dictionary.activities.bases.AbstractSoundPlayActivity
 import com.example.dell.dictionary.adapters.WordAdapter
@@ -26,8 +20,6 @@ import com.example.dell.dictionary.controllers.FavoriteController
 import com.example.dell.dictionary.models.Word
 
 import com.example.dell.dictionary.controllers.WordController
-
-import java.util.Locale
 
 class MainActivity : AbstractSoundPlayActivity() {
 
