@@ -8,6 +8,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.dell.dictionary.controllers.FavoriteController;
+
 import java.util.List;
 
 /**
@@ -58,6 +60,11 @@ public class MyPagerAdapter extends android.support.v4.view.PagerAdapter {
                 tts.speackOut(position,tvWord.getText().toString());
             }
         });
+
+
+
+        //imbstar.setActivated(FavoriteController.INSTANCE.contains(word));
+
 
         container.addView(view);
         return view;

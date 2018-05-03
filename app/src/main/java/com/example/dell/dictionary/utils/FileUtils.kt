@@ -1,17 +1,29 @@
 package com.example.dell.dictionary.utils
 
 import android.content.Context
+import com.example.dell.dictionary.DictionaryApplication
+import com.example.dell.dictionary.controllers.WordController
 import com.google.gson.Gson
-import java.io.File
-import java.io.FileReader
-import java.io.FileWriter
-
+import java.io.*
 /**
  * Created by Viethoc on 5/3/18.
  */
 object FileUtils{
 
-    fun read(context: Context, path: String): String{
+    private val context by lazy { DictionaryApplication.instance }
+
+    fun exist(path: String):Boolean{
+        return File(path).exists();
+    }
+
+    fun readAssets(path: String): String{
+        return context.assets.open(path)
+                .bufferedReader().use{
+                    it.readText()
+                }
+    }
+
+    fun read(path: String): String{
         val file = File(context.filesDir, path)
         if(file.exists()){
             val fileReader = FileReader(file)
@@ -20,7 +32,7 @@ object FileUtils{
         return ""
     }
 
-    fun write(context: Context, path: String, content: String){
+    fun write(path: String, content: String){
         val file = File(context.filesDir, path)
 
         if(file.exists()){
@@ -32,10 +44,10 @@ object FileUtils{
         fileWriter.close()
     }
 
-    fun write(context: Context, path: String, content: Any){
-        if(content is String)write(context, path, content)
+    fun write(path: String, content: Any){
+        if(content is String)write(path, content)
         else {
-            write(context, path, Gson().toJson(content))
+            write(path, Gson().toJson(content))
         }
     }
 }

@@ -12,17 +12,15 @@ object FavoriteController {
     var favorites = mutableListOf<Word>()
 
     init {
-        val jsonString = DictionaryApplication.instance.assets.open(fileName)
-                .bufferedReader().use{
-                    it.readText()
-                }
-
-        favorites = Gson().fromJson(jsonString, Array<Word>::class.java).toMutableList()
+        val jsonString = FileUtils.read(fileName)
+        if(jsonString.isNotEmpty()){
+            favorites = Gson().fromJson(jsonString, Array<Word>::class.java).toMutableList()
+        }
     }
 
     fun save(){
         try{
-            FileUtils.write(DictionaryApplication.instance, fileName, favorites)
+            FileUtils.write(fileName, favorites)
         }catch (err: Exception){
             err.printStackTrace()
         }

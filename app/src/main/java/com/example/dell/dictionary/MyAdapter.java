@@ -130,7 +130,7 @@ public class MyAdapter extends BaseAdapter implements Filterable {
                         for (int i = 0; i < mOriginalValues.size(); i++) {
                             String data = mOriginalValues.get(i).getWord();
                             if (data.toLowerCase().startsWith(constraint.toString())) {
-                                FilteredArrayList.add(new Word(mOriginalValues.get(i).getWord(),mOriginalValues.get(i).getDetail(),mOriginalValues.get(i).getId()));
+                                FilteredArrayList.add(mOriginalValues.get(i));
                             }
                         }
                         // set the Filtered result to return

@@ -18,6 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.dell.dictionary.controllers.WordController;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +30,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
 
     private MyAdapter myadapter;
     private ListView listView,listView_navigation;
-    private List<Word> words,favoriteWords;
-    private MyDatabase myDatabase;
-    private MyDatabaseLove databaseLove;
+    private List<Word> favoriteWords;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
 
     public TextToSpeech tts;
     private int result;
-    //private MyAdapter.ItemCustomListener itemCustomListener;
 
 
 
@@ -47,38 +47,20 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
         setContentView(R.layout.activity_main);
         tts = new TextToSpeech(this, this);
 
-        try {
-            myDatabase = new MyDatabase(this);
-            databaseLove=new MyDatabaseLove(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         listView=(ListView) findViewById(R.id.listview);
-        words=new ArrayList<>();
         favoriteWords=new ArrayList<>();
-        myDatabase.opendatabase();
 
-        words=myDatabase.getList();
 
-        databaseLove.open();
-        favoriteWords=databaseLove.getList();
-
-        myadapter=new MyAdapter(words,favoriteWords,this);
+        myadapter=new MyAdapter(WordController.INSTANCE.getWords(),favoriteWords,this);
         listView.setAdapter(myadapter);
-        myDatabase.close();
-        databaseLove.close();
-
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 final Word word=(Word) adapterView.getItemAtPosition(position);
                     Intent intent = new Intent(MainActivity.this, Detail_activity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("word", word);
-                    intent.putExtras(bundle);
+                    intent.putExtra("word_id", word.getId());
                     startActivity(intent);
             }
         });

@@ -8,6 +8,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dell.dictionary.controllers.FavoriteController;
+import com.example.dell.dictionary.controllers.WordController;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +22,10 @@ import java.util.Locale;
 public class Detail_activity extends AppCompatActivity implements MyPagerAdapter.TTS,TextToSpeech.OnInitListener{
 
     private MyPagerAdapter pagerAdapter;
-    private MyDatabase myDatabase;
     private ViewPager pager;
     private ImageButton imbstar,imbspeak;
     private TextView tvWord;
-    private MyDatabaseLove databaseLove;
-    List<Word> words;
+
     private Word word;
 
     private TextToSpeech tts;
@@ -37,55 +38,28 @@ public class Detail_activity extends AppCompatActivity implements MyPagerAdapter
 
         tts=new TextToSpeech(this,this);
 
+        Bundle bundle = getIntent().getExtras();
+        word = WordController.INSTANCE.getById(bundle.getInt("word_id"));
 
         tvWord = (TextView) findViewById(R.id.tvWord);
         imbspeak=(ImageButton) findViewById(R.id.imbspeak);
         imbstar=(ImageButton) findViewById(R.id.imbstar);
 
-        Bundle bundle = getIntent().getExtras();
-        word = (Word) bundle.get("word");
+
 
         Toast.makeText(this, word.getWord() + word.getId(), Toast.LENGTH_SHORT).show();
 
 
-        try {
-            myDatabase = new MyDatabase(this);
-            databaseLove = new MyDatabaseLove(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        databaseLove.open();
         init();
-        if (databaseLove.getList() != null) {
-            for (Word i : databaseLove.getList()) {
-                if (i.getWord().equals(tvWord.getText().toString())) {
-                    imbstar.setImageDrawable(getResources().getDrawable(R.drawable.staron));
-                }
-            }
-        }
-        pager.setCurrentItem(positionWord(word));
-        databaseLove.close();
 
     }
 
 
     private void init() {
-        words = new ArrayList<>();
-        myDatabase.opendatabase();
-        words = (ArrayList<Word>) myDatabase.getList();
-        myDatabase.close();
-        pagerAdapter = new MyPagerAdapter(words, this);
+        pagerAdapter = new MyPagerAdapter(WordController.INSTANCE.getWords(), this);
         pager = (ViewPager) findViewById(R.id.viewPager);
         pager.setAdapter(pagerAdapter);
-    }
-
-    private int positionWord(Word word) {
-        for (int i = 0; i < words.size(); i++) {
-            if (words.get(i).getId() == word.getId())
-                return i;
-        }
-        return 0;
+        pager.setCurrentItem(WordController.INSTANCE.getWords().indexOf(word));
     }
 
     @Override
