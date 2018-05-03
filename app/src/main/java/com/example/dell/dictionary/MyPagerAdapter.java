@@ -44,15 +44,20 @@ public class MyPagerAdapter extends android.support.v4.view.PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
+
         LayoutInflater layoutInflater =LayoutInflater.from(context);
         View view=layoutInflater.inflate(R.layout.viewpager,container,false);
+
         final TextView tvWord=(TextView) view.findViewById(R.id.tvWord);
-        TextView tvDetail=(TextView) view.findViewById(R.id.tvDetail);
-        ImageButton imbspeak=(ImageButton) view.findViewById(R.id.imbspeak);
+        final TextView tvDetail=(TextView) view.findViewById(R.id.tvDetail);
+        final ImageButton imbspeak=(ImageButton) view.findViewById(R.id.imbspeak);
+        final ImageButton imbstar = (ImageButton)view.findViewById(R.id.imbstar);
 
-        tvWord.setText(words.get(position).getWord());
+        final Word word = words.get(position);
 
-        tvDetail.setText(words.get(position).getDetail().substring(words.get(position).getWord().length()));
+        tvWord.setText(word.getWord());
+        imbstar.setActivated(FavoriteController.INSTANCE.contains(word));
+        tvDetail.setText(word.getDetail().substring(word.getWord().length()));
 
         imbspeak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,10 +66,13 @@ public class MyPagerAdapter extends android.support.v4.view.PagerAdapter {
             }
         });
 
-
-
-        //imbstar.setActivated(FavoriteController.INSTANCE.contains(word));
-
+        imbstar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FavoriteController.INSTANCE.toggleAdd(word);
+                imbstar.setActivated(FavoriteController.INSTANCE.contains(word));
+            }
+        });
 
         container.addView(view);
         return view;
