@@ -23,13 +23,10 @@ public class Detail_activity extends AppCompatActivity implements MyPagerAdapter
 
     private MyPagerAdapter pagerAdapter;
     private ViewPager pager;
-    private ImageButton imbstar,imbspeak;
-    private TextView tvWord;
 
     private Word word;
 
     private TextToSpeech tts;
-    private int result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +37,6 @@ public class Detail_activity extends AppCompatActivity implements MyPagerAdapter
 
         Bundle bundle = getIntent().getExtras();
         word = WordController.INSTANCE.getById(bundle.getInt("word_id"));
-
-        tvWord = (TextView) findViewById(R.id.tvWord);
-        imbspeak=(ImageButton) findViewById(R.id.imbspeak);
-        imbstar=(ImageButton) findViewById(R.id.imbstar);
-
-
-
-        Toast.makeText(this, word.getWord() + word.getId(), Toast.LENGTH_SHORT).show();
-
 
         init();
 
@@ -65,7 +53,7 @@ public class Detail_activity extends AppCompatActivity implements MyPagerAdapter
     @Override
     public void onInit(int status) {
         if (status!=TextToSpeech.ERROR){
-            result=tts.setLanguage(Locale.US);
+            tts.setLanguage(Locale.US);
         }else {
             Toast.makeText(getApplicationContext(),"Feature not sopportedin your device",Toast.LENGTH_SHORT).show();
         }

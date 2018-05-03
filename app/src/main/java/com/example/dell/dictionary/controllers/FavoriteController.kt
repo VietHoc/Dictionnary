@@ -43,7 +43,7 @@ object FavoriteController {
         }
     }
 
-    fun toggleAdd(word: Word){
+    fun toggleAdd(word: Word):Boolean{
 
         if(contains(word)){
             favorites.removeAll { it.id == word.id }
@@ -52,5 +52,7 @@ object FavoriteController {
         }
 
         save()
+
+        return contains(word)
     }
 }

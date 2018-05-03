@@ -1,6 +1,7 @@
 package com.example.dell.dictionary
 
 import android.content.Context
+import android.support.v4.view.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,11 @@ import com.example.dell.dictionary.controllers.FavoriteController
 /**
  * Created by DELL on 8/4/2016.
  */
-class MyPagerAdapter(internal var words: List<Word>, internal var context: Context) : android.support.v4.view.PagerAdapter() {
-    internal var tts: TTS
+class MyPagerAdapter(
+        var words: List<Word>,
+        var context: Context) : PagerAdapter() {
 
-    init {
-        tts = context as TTS
-    }
+    var tts = context as TTS
 
     override fun getPageWidth(position: Int): Float {
         return 1f
@@ -28,8 +28,8 @@ class MyPagerAdapter(internal var words: List<Word>, internal var context: Conte
         return words.size
     }
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object`
+    override fun isViewFromObject(view: View, obj: Any): Boolean {
+        return view === obj
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -51,8 +51,7 @@ class MyPagerAdapter(internal var words: List<Word>, internal var context: Conte
         imbspeak.setOnClickListener { tts.speackOut(position, tvWord.text.toString()) }
 
         imbstar.setOnClickListener {
-            FavoriteController.toggleAdd(word)
-            imbstar.isActivated = FavoriteController.contains(word)
+            imbstar.isActivated = FavoriteController.toggleAdd(word)
         }
 
         container.addView(view)

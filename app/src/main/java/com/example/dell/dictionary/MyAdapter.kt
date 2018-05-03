@@ -18,20 +18,13 @@ import java.util.ArrayList
 /**
  * Created by DELL on 7/30/2016.
  */
-class MyAdapter(private var listdata: List<Word>?, private val listFavorite: List<Word>, private val context: Context) : BaseAdapter(), Filterable {
-    private val layoutInflater: LayoutInflater
-    private val itemCustomListener: ItemCustomListener?
-    private val itemFavorite: ItemFavorite? = null
-    //private List<Word> words;
-    private val word: Word? = null
+class MyAdapter(private var listdata: List<Word>?,
+                private val context: Context) : BaseAdapter(), Filterable {
+
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+    private val itemCustomListener = context as ItemCustomListener
 
     private var mOriginalValues: List<Word>? = null
-
-
-    init {
-        layoutInflater = LayoutInflater.from(context)
-        this.itemCustomListener = context as ItemCustomListener
-    }
 
     override fun getCount(): Int {
 
@@ -53,9 +46,10 @@ class MyAdapter(private var listdata: List<Word>?, private val listFavorite: Lis
 
         if (view == null) {
             view = layoutInflater.inflate(R.layout.row_item, viewGroup, false)
+
             holder = ViewHolder()
             holder.word = word
-            holder.textView = view!!.findViewById<View>(R.id.textview) as TextView
+            holder.textView = view.findViewById<View>(R.id.textview) as TextView
             holder.imbspeak = view.findViewById<View>(R.id.imbspeaker) as ImageButton
             holder.imbstar = view.findViewById<View>(R.id.imbstar) as ImageButton
 
@@ -69,7 +63,7 @@ class MyAdapter(private var listdata: List<Word>?, private val listFavorite: Lis
         holder.imbspeak!!.setOnClickListener {
             Log.i("TAG", holder.textView!!.text.toString())
 
-            itemCustomListener?.onSpeak(position, holder.textView!!.text.toString())
+            itemCustomListener.onSpeak(position, holder.textView!!.text.toString())
         }
 
         holder.imbstar!!.setOnClickListener {
@@ -78,7 +72,8 @@ class MyAdapter(private var listdata: List<Word>?, private val listFavorite: Lis
         }
 
         holder.imbstar!!.isActivated = FavoriteController.contains(word)
-        return view
+
+        return view!!
     }
 
 
@@ -113,7 +108,7 @@ class MyAdapter(private var listdata: List<Word>?, private val listFavorite: Lis
                             FilteredArrayList.add(mOriginalValues!![i])
                         }
                     }
-                    // set the Filtered result to return
+
                     results.count = FilteredArrayList.size
                     results.values = FilteredArrayList
                 }
@@ -129,9 +124,5 @@ class MyAdapter(private var listdata: List<Word>?, private val listFavorite: Lis
 
     interface ItemCustomListener {
         fun onSpeak(position: Int, text: String)
-    }
-
-    interface ItemFavorite {
-        fun onFavorite(position: Int)
     }
 }

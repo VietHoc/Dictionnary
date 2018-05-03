@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
 
     private MyAdapter myadapter;
     private ListView listView,listView_navigation;
-    private List<Word> favoriteWords;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -49,10 +48,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCus
 
 
         listView=(ListView) findViewById(R.id.listview);
-        favoriteWords=new ArrayList<>();
 
 
-        myadapter=new MyAdapter(WordController.INSTANCE.getWords(),favoriteWords,this);
+        myadapter=new MyAdapter(WordController.INSTANCE.getWords(),this);
         listView.setAdapter(myadapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
