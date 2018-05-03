@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:id="@+id/toolbar"
+    android:background="#4250A7">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imgv_search"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_menu_search"
+            android:layout_alignParentRight="true"
+            android:imeOptions="actionSearch"
+            android:inputType="text"/>
+        <EditText
+            android:id="@+id/ed_search"
+            android:layout_toLeftOf="@id/imgv_search"
+            android:background="@android:drawable/editbox_background"
+            android:layout_width="match_parent"
+            android:hint="Search..."
+            android:layout_height="40dp"
+            android:layout_margin="5sp"/>
+
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.Toolbar>

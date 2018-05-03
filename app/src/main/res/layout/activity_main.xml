@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.dell.dictionary.MainActivity"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar"/>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="#4250A7">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="8dp">
+            <FrameLayout
+                android:id="@+id/frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ListView
+                    android:id="@+id/listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:dividerHeight="5dp">
+                </ListView>
+            </FrameLayout>
+        </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:orientation="vertical"
+            android:padding="2dp"
+            android:background="@android:color/darker_gray">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dictionary"/>
+            <ListView
+                android:id="@+id/listview_navi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#203012"
+                android:dividerHeight="2dp">
+            </ListView>
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>
