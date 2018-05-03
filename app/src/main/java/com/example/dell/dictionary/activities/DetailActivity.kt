@@ -1,19 +1,17 @@
-package com.example.dell.dictionary
+package com.example.dell.dictionary.activities
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
+import com.example.dell.dictionary.adapters.MyPagerAdapter
+import com.example.dell.dictionary.R
+import com.example.dell.dictionary.models.Word
 
-import com.example.dell.dictionary.controllers.FavoriteController
 import com.example.dell.dictionary.controllers.WordController
 
-import java.io.IOException
-import java.util.ArrayList
 import java.util.Locale
 
 /**

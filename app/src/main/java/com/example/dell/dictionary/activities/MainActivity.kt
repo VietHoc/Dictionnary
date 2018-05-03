@@ -1,26 +1,24 @@
-package com.example.dell.dictionary
+package com.example.dell.dictionary.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.support.annotation.StringRes
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.graphics.drawable.DrawerArrowDrawable
 import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
+import com.example.dell.dictionary.adapters.MyAdapter
+import com.example.dell.dictionary.R
+import com.example.dell.dictionary.models.Word
 
 import com.example.dell.dictionary.controllers.WordController
 

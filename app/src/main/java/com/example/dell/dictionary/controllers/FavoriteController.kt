@@ -1,7 +1,6 @@
 package com.example.dell.dictionary.controllers
 
-import com.example.dell.dictionary.DictionaryApplication
-import com.example.dell.dictionary.Word
+import com.example.dell.dictionary.models.Word
 import com.example.dell.dictionary.utils.FileUtils
 import com.google.gson.Gson
 

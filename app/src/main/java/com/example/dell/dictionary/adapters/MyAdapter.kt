@@ -1,4 +1,4 @@
-package com.example.dell.dictionary
+package com.example.dell.dictionary.adapters
 
 import android.content.Context
 import android.util.Log
@@ -10,8 +10,10 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.TextView
+import com.example.dell.dictionary.R
 
 import com.example.dell.dictionary.controllers.FavoriteController
+import com.example.dell.dictionary.models.Word
 
 import java.util.ArrayList
 

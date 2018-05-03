@@ -1,4 +1,4 @@
-package com.example.dell.dictionary
+package com.example.dell.dictionary.adapters
 
 import android.content.Context
 import android.support.v4.view.PagerAdapter
@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.example.dell.dictionary.R
 
 import com.example.dell.dictionary.controllers.FavoriteController
+import com.example.dell.dictionary.models.Word
 
 /**
  * Created by DELL on 8/4/2016.
