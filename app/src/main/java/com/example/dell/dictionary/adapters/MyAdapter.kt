@@ -20,8 +20,9 @@ import java.util.ArrayList
 /**
  * Created by DELL on 7/30/2016.
  */
-class MyAdapter(private var listdata: List<Word>?,
-                private val context: Context) : BaseAdapter(), Filterable {
+class MyAdapter(private var listdata: List<Word>,
+                private val context: Context) :
+        BaseAdapter(), Filterable {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
     private val itemCustomListener = context as ItemCustomListener
@@ -30,11 +31,11 @@ class MyAdapter(private var listdata: List<Word>?,
 
     override fun getCount(): Int {
 
-        return this.listdata!!.size
+        return this.listdata.size
     }
 
     override fun getItem(i: Int): Any {
-        return listdata!![i]
+        return listdata[i]
     }
 
     override fun getItemId(position: Int): Long {
@@ -44,7 +45,7 @@ class MyAdapter(private var listdata: List<Word>?,
     override fun getView(position: Int, view: View?, viewGroup: ViewGroup): View {
         var view = view
         val holder: ViewHolder
-        val word = listdata!![position]
+        val word = listdata[position]
 
         if (view == null) {
             view = layoutInflater.inflate(R.layout.row_item, viewGroup, false)
@@ -69,7 +70,7 @@ class MyAdapter(private var listdata: List<Word>?,
         }
 
         holder.imbstar!!.setOnClickListener {
-            FavoriteController.toggleAdd(word)
+            FavoriteController.toggleAdd(holder.word)
             notifyDataSetChanged()
         }
 
@@ -83,7 +84,7 @@ class MyAdapter(private var listdata: List<Word>?,
         var textView: TextView? = null
         var imbspeak: ImageButton? = null
         var imbstar: ImageButton? = null
-        var word: Word? = null
+        lateinit var word: Word
     }
 
 
@@ -97,9 +98,7 @@ class MyAdapter(private var listdata: List<Word>?,
                 if (mOriginalValues == null) {
                     mOriginalValues = ArrayList(listdata!!) // saves the original data in mOriginalValues
                 }
-                if (constraint == null || constraint.length == 0) {
-
-                    // set the Original result to return
+                if (constraint.isNullOrEmpty()) {
                     results.count = mOriginalValues!!.size
                     results.values = mOriginalValues
                 } else {
