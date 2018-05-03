@@ -6,6 +6,8 @@ import android.speech.tts.TextToSpeech
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,6 +21,7 @@ import android.widget.Toast
 import com.example.dell.dictionary.adapters.MyAdapter
 import com.example.dell.dictionary.R
 import com.example.dell.dictionary.activities.bases.AbstractSoundPlayActivity
+import com.example.dell.dictionary.adapters.WordAdapter
 import com.example.dell.dictionary.controllers.FavoriteController
 import com.example.dell.dictionary.models.Word
 
@@ -28,26 +31,16 @@ import java.util.Locale
 
 class MainActivity : AbstractSoundPlayActivity() {
 
-    private lateinit var myadapter: MyAdapter
-    var tts: TextToSpeech? = null
-
+    private var myadapter = WordAdapter(WordController.words)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val listView = findViewById<View>(R.id.listview) as ListView
+        val recyclerView = findViewById<View>(R.id.listview) as RecyclerView
 
-
-        myadapter = MyAdapter(WordController.words, this)
-        listView.adapter = myadapter
-
-        listView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
-            val word = adapterView.getItemAtPosition(position) as Word
-            val intent = Intent(this@MainActivity, DetailActivity::class.java)
-            intent.putExtra("word_id", word.id)
-            startActivity(intent)
-        }
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = myadapter
 
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
@@ -96,11 +89,12 @@ class MainActivity : AbstractSoundPlayActivity() {
                 0 -> showList(WordController.words)
                 1 -> showList(FavoriteController.favorites)
             }
+            drawerLayout.closeDrawers()
         }
     }
 
     private fun showList(words: List<Word>){
-        myadapter.listdata = words
+        myadapter.words = words
         myadapter.notifyDataSetChanged()
     }
 }
